@@ -156,7 +156,8 @@ export default function Home() {
               </div>
             ) : (
               messages.map((msg, idx) => {
-                const isPrivacy = msg.content.trim().startsWith('[DATENSCHUTZ]');
+                const privacyRegex = /^\[(DATENSCHUTZ|PRIVACY)\]/i;
+                const isPrivacy = msg.role === 'assistant' && privacyRegex.test(msg.content.trim());
                 
                 return (
                   <div key={idx} className={`mb-6 md:mb-8 flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
@@ -164,7 +165,7 @@ export default function Home() {
                       msg.role === 'user' 
                         ? 'bg-[#212121] text-white rounded-br-lg border border-white/[0.05]' 
                         : isPrivacy
-                          ? 'bg-yellow-500/10 border border-yellow-500/40 text-yellow-200/90 rounded-bl-lg shadow-[0_0_20px_rgba(234,179,8,0.08)]'
+                          ? 'bg-yellow-500/10 border border-yellow-500/40 text-yellow-100 rounded-bl-lg shadow-[0_0_20px_rgba(234,179,8,0.08)]'
                           : 'text-gray-200'
                     }`}>
                       {msg.role === 'assistant' && (
@@ -180,7 +181,7 @@ export default function Home() {
                             a: ({ node, ...props }) => <a {...props} target="_blank" rel="noopener noreferrer" />
                           }}
                         >
-                          {isPrivacy ? msg.content.trim().replace('[DATENSCHUTZ]', '').trim() : msg.content}
+                          {isPrivacy ? msg.content.trim().replace(privacyRegex, '').trim() : msg.content}
                         </ReactMarkdown>
                       </div>
                     </div>
