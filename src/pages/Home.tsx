@@ -155,34 +155,38 @@ export default function Home() {
                 <p className="text-xs md:text-sm text-gray-400 mt-2 max-w-md">{t('chat.privacy_warning')}</p>
               </div>
             ) : (
-              messages.map((msg, idx) => (
-                <div key={idx} className={`mb-6 md:mb-8 flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[90%] md:max-w-[85%] px-3 py-2 md:px-4 md:py-2.5 rounded-[20px] md:rounded-[24px] ${
-                    msg.role === 'user' 
-                      ? 'bg-[#212121] text-white rounded-br-lg border border-white/[0.05]' 
-                      : msg.content.startsWith('[DATENSCHUTZ]')
-                        ? 'bg-yellow-500/10 border border-yellow-500/30 text-yellow-100 rounded-bl-lg shadow-[0_0_20px_rgba(234,179,8,0.05)]'
-                        : 'text-gray-200'
-                  }`}>
-                    {msg.role === 'assistant' && (
-                      <div className={`flex items-center gap-2 mb-1.5 text-xs ${msg.content.startsWith('[DATENSCHUTZ]') ? 'text-yellow-400 opacity-100 font-bold' : 'opacity-50'}`}>
-                        <GraduationCap size={14} />
-                        {t('chat.assistant')}
+              messages.map((msg, idx) => {
+                const isPrivacy = msg.content.trim().startsWith('[DATENSCHUTZ]');
+                
+                return (
+                  <div key={idx} className={`mb-6 md:mb-8 flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                    <div className={`max-w-[90%] md:max-w-[85%] px-3 py-2 md:px-4 md:py-2.5 rounded-[20px] md:rounded-[24px] ${
+                      msg.role === 'user' 
+                        ? 'bg-[#212121] text-white rounded-br-lg border border-white/[0.05]' 
+                        : isPrivacy
+                          ? 'bg-yellow-500/10 border border-yellow-500/40 text-yellow-200/90 rounded-bl-lg shadow-[0_0_20px_rgba(234,179,8,0.08)]'
+                          : 'text-gray-200'
+                    }`}>
+                      {msg.role === 'assistant' && (
+                        <div className={`flex items-center gap-2 mb-1.5 text-xs ${isPrivacy ? 'text-yellow-400 opacity-100 font-bold' : 'opacity-50'}`}>
+                          <GraduationCap size={14} />
+                          {t('chat.assistant')}
+                        </div>
+                      )}
+                      <div className="text-sm md:text-[15px] leading-relaxed break-words markdown-content">
+                        <ReactMarkdown 
+                          remarkPlugins={[remarkGfm]}
+                          components={{
+                            a: ({ node, ...props }) => <a {...props} target="_blank" rel="noopener noreferrer" />
+                          }}
+                        >
+                          {isPrivacy ? msg.content.trim().replace('[DATENSCHUTZ]', '').trim() : msg.content}
+                        </ReactMarkdown>
                       </div>
-                    )}
-                    <div className="text-sm md:text-[15px] leading-relaxed break-words markdown-content">
-                      <ReactMarkdown 
-                        remarkPlugins={[remarkGfm]}
-                        components={{
-                          a: ({ node, ...props }) => <a {...props} target="_blank" rel="noopener noreferrer" />
-                        }}
-                      >
-                        {msg.content.startsWith('[DATENSCHUTZ]') ? msg.content.replace('[DATENSCHUTZ]', '').trim() : msg.content}
-                      </ReactMarkdown>
                     </div>
                   </div>
-                </div>
-              ))
+                );
+              })
             )}
             <div ref={messagesEndRef} />
           </div>
