@@ -1,0 +1,29 @@
+chat:
+  title: "Consulente per gli studi Aachen"
+  placeholder: "Chiedi qualcosa..."
+  send: "Invia"
+  select_model: "Seleziona modello"
+  user: "Tu"
+  assistant: "Consulente per gli studi Aachen"
+  new_chat: "Nuova chat"
+  warning: "Consulente per gli studi Aachen può commettere errori. Controlla le informazioni importanti."
+  privacy_warning: "Per favore, non condividere informazioni private come età, indirizzo o altri dati personali."
+  placeholder_accept_first: "Per favore, accetta prima l'informativa sulla privacy"
+  error_message: "Errore: Impossibile raggiungere l'IA."
+  loading: "Caricamento..."
+  models: "Modelli"
+
+privacy:
+  title: "Informativa sulla Privacy e Termini di Servizio"
+  paragraph1: "Tutto il trattamento dei dati personali e relativi al progetto è condotto esclusivamente all'interno dell'Unione Europea e in piena conformità con le normative locali sulla protezione dei dati."
+  paragraph2: "L'infrastruttura LLM è alimentata da Mixtral, un modello open source sviluppato da Mistral AI. La nostra istanza è ospitata su infrastruttura West.ai situata nel Nord Reno-Westfalia, Germania, garantendo che i tuoi dati rimangano all'interno del territorio sovrano europeo."
+  paragraph3: "Procedendo, riconosci queste condizioni. Verrà utilizzato un cookie persistente per una durata di 30 giorni per registrare il tuo consenso."
+  accept_button: "Ho capito"
+
+info:
+  title: "Info e Crediti"
+  back: "Torna alla chat"
+  about_title: "Informazioni sul progetto"
+  about_text: "Il Consulente per gli Studi di Aquisgrana è un assistente basato sull'IA progettato per aiutare gli studenti delle università di Aquisgrana a orientarsi nella vita accademica, trovare risorse e ottenere risposte a domande comuni sui loro studi e sulla città."
+  credits_title: "Crediti"
+  credits_text: "Sviluppato da Jakob Pütz, Alessandro Kiuila, Gerwin Unger, Benjamin Schmitt e Stavros Fritsching nell'ambito del progetto Go-IT, con il supporto di giftGrün G.m.b.H."

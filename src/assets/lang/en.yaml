@@ -1,0 +1,29 @@
+chat:
+  title: "Aachen Study Advisor"
+  placeholder: "Ask something..."
+  send: "Send"
+  select_model: "Select model"
+  user: "You"
+  assistant: "Aachen Study Advisor"
+  new_chat: "New Chat"
+  warning: "Aachen Study Advisor can make mistakes. Check important info."
+  privacy_warning: "Please do not share private information like age, address, or other personal data."
+  placeholder_accept_first: "Please accept the privacy policy first"
+  error_message: "Error: Could not reach the AI."
+  loading: "Loading..."
+  models: "Models"
+
+privacy:
+  title: "Data Privacy & Terms of Service"
+  paragraph1: "All processing of personal and project-related data is conducted exclusively within the European Union and in full compliance with local data protection regulations."
+  paragraph2: "The LLM infrastructure is powered by Mixtral, an open-source model developed by Mistral AI. Our instance is self-hosted on West.ai infrastructure located in North-Rhine Westphalia, Germany, ensuring that your data remains within sovereign European territory."
+  paragraph3: "By proceeding, you acknowledge these conditions. A persistent cookie will be used for a duration of 30 days to record your consent."
+  accept_button: "I understand"
+
+info:
+  title: "Info & Credits"
+  back: "Back to Chat"
+  about_title: "About the Project"
+  about_text: "The Aachen Study Advisor is an AI-powered assistant designed to help students at Aachen universities navigate academic life, find resources, and get answers to common questions about their studies and the city."
+  credits_title: "Credits"
+  credits_text: "Developed by Jakob Pütz, Alessandro Kiuila, Gerwin Unger, Benjamin Schmitt, and Stavros Fritsching as part of the Go-IT project, supported by giftGrün G.m.b.H."

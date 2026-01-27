@@ -1,0 +1,29 @@
+chat:
+  title: "アーヘン学習アドバイザー"
+  placeholder: "何か聞いてください..."
+  send: "送信"
+  select_model: "モデルを選択"
+  user: "あなた"
+  assistant: "アーヘン学習アドバイザー"
+  new_chat: "新しいチャット"
+  warning: "アーヘン学習アドバイザーは間違いを犯す可能性があります。重要な情報を確認してください。"
+  privacy_warning: "年齢、住所、その他の個人データなどの個人情報を共有しないでください。"
+  placeholder_accept_first: "まずプライバシーポリシーを承認してください"
+  error_message: "エラー：AIに接続できませんでした。"
+  loading: "読み込み中..."
+  models: "モデル"
+
+privacy:
+  title: "データプライバシーと利用規約"
+  paragraph1: "個人およびプロジェクト関連データのすべての処理は、欧州連合内でのみ行われ、現地のデータ保護規則を完全に遵守しています。"
+  paragraph2: "LLMインフラストラクチャは、Mistral AIによって開発されたオープンソースモデルであるMixtralによって駆動されています。当社のインスタンスは、ドイツのノルトライン＝ヴェストファーレン州にあるWest.aiインフラストラクチャで自己ホストされており、データが欧州の主権領域を離れることはありません。"
+  paragraph3: "続行することで、これらの条件を承認したものとみなされます。同意を記録するために、30日間有効な永続的なクッキーが使用されます。"
+  accept_button: "理解しました"
+
+info:
+  title: "情報とクレジット"
+  back: "チャットに戻る"
+  about_title: "プロジェクトについて"
+  about_text: "アーヘン学習アドバイザーは、アーヘンの大学の学生が学業生活を送り、リソースを見つけ、学習や街に関する一般的な質問への回答を得るのを支援するために設計されたAIパワードアシスタントです。"
+  credits_title: "クレジット"
+  credits_text: "Go-ITプロジェクトの一環として、Jakob Pütz、Alessandro Kiuila、Gerwin Unger、Benjamin Schmitt、Stavros Fritschingによって開発され、giftGrün G.m.b.H.の支援を受けています。"

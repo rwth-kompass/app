@@ -1,0 +1,29 @@
+chat:
+  title: "Asesor de estudios Aachen"
+  placeholder: "Pregunta algo..."
+  send: "Enviar"
+  select_model: "Seleccionar modelo"
+  user: "Tú"
+  assistant: "Asesor de estudios Aachen"
+  new_chat: "Nuevo chat"
+  warning: "Asesor de estudios Aachen puede cometer errores. Revisa la información importante."
+  privacy_warning: "Por favor, no compartas información privada como edad, dirección u otros datos personales."
+  placeholder_accept_first: "Por favor, acepta primero la política de privacidad"
+  error_message: "Error: No se pudo conectar con la IA."
+  loading: "Cargando..."
+  models: "Modelos"
+
+privacy:
+  title: "Privacidad de Datos y Términos de Servicio"
+  paragraph1: "Todo el procesamiento de datos personales y relacionados con el proyecto se lleva a cabo exclusivamente dentro de la Unión Europea y en total cumplimiento de las regulaciones locales de protección de datos."
+  paragraph2: "La infraestructura de LLM está alimentada por Mixtral, un modelo de código abierto desarrollado por Mistral AI. Nuestra instancia está alojada localmente en la infraestructura West.ai ubicada en Renania del Norte-Westfalia, Alemania, garantizando que sus datos permanezcan dentro del territorio soberano europeo."
+  paragraph3: "Al continuar, usted reconoce estas condiciones. Se utilizará una cookie persistente durante 30 días para registrar su consentimiento."
+  accept_button: "Entiendo"
+
+info:
+  title: "Información y Créditos"
+  back: "Volver al chat"
+  about_title: "Sobre el proyecto"
+  about_text: "El Asesor de Estudios de Aquisgrán es un asistente impulsado por IA diseñado para ayudar a los estudiantes de las universidades de Aquisgrán a orientarse en la vida académica, encontrar recursos y obtener respuestas a preguntas comunes sobre sus estudios y la ciudad."
+  credits_title: "Créditos"
+  credits_text: "Desarrollado por Jakob Pütz, Alessandro Kiuila, Gerwin Unger, Benjamin Schmitt y Stavros Fritsching como parte del proyecto Go-IT, con el apoyo de giftGrün G.m.b.H."

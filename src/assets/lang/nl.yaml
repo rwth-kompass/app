@@ -1,0 +1,29 @@
+chat:
+  title: "Studieadviseur Aachen"
+  placeholder: "Vraag iets..."
+  send: "Verzenden"
+  select_model: "Selecteer model"
+  user: "Jij"
+  assistant: "Studieadviseur Aachen"
+  new_chat: "Nieuwe chat"
+  warning: "Studieadviseur Aachen kan fouten maken. Controleer belangrijke informatie."
+  privacy_warning: "Deel geen privégegevens zoals leeftijd, adres of andere persoonlijke gegevens."
+  placeholder_accept_first: "Accepteer eerst het privacybeleid"
+  error_message: "Fout: Kon de AI niet bereiken."
+  loading: "Laden..."
+  models: "Modellen"
+
+privacy:
+  title: "Gegevensprivacy & Servicevoorwaarden"
+  paragraph1: "Alle verwerking van persoonlijke en projectgerelateerde gegevens vindt uitsluitend plaats binnen de Europese Unie en in volledige overeenstemming met de lokale regelgeving inzake gegevensbescherming."
+  paragraph2: "De LLM-infrastructuur wordt aangedreven door Mixtral, een open-source model ontwikkeld door Mistral AI. Onze instantie wordt gehost op de West.ai-infrastructuur in Noordrijn-Westfalen, Duitsland, waardoor uw gegevens binnen het soevereine Europese grondgebied blijven."
+  paragraph3: "Door verder te gaan, erkent u deze voorwaarden. Er wordt een permanente cookie gebruikt voor een duur van 30 dagen om uw toestemming te registreren."
+  accept_button: "Ik begrijp het"
+
+info:
+  title: "Info & Credits"
+  back: "Terug naar chat"
+  about_title: "Over het project"
+  about_text: "De Studieadviseur Aachen is een door AI aangedreven assistent die is ontworpen om studenten aan de universiteiten van Aken te helpen navigeren door het academische leven, bronnen te vinden en antwoorden te krijgen op veelgestelde vragen over hun studie en de stad."
+  credits_title: "Credits"
+  credits_text: "Ontwikkeld door Jakob Pütz, Alessandro Kiuila, Gerwin Unger, Benjamin Schmitt en Stavros Fritsching als onderdeel van het Go-IT-project, ondersteund door giftGrün G.m.b.H."

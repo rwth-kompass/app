@@ -1,0 +1,29 @@
+chat:
+  title: "Orientador de estudos Aachen"
+  placeholder: "Pergunte algo..."
+  send: "Enviar"
+  select_model: "Selecionar modelo"
+  user: "Você"
+  assistant: "Orientador de estudos Aachen"
+  new_chat: "Nova conversa"
+  warning: "O Orientador de estudos Aachen pode cometer erros. Verifique informações importantes."
+  privacy_warning: "Por favor, não compartilhe informações privadas como idade, endereço ou outros dados pessoais."
+  placeholder_accept_first: "Por favor, aceite a política de privacidade primeiro"
+  error_message: "Erro: Não foi possível alcançar a IA."
+  loading: "Carregando..."
+  models: "Modelos"
+
+privacy:
+  title: "Privacidade de Dados e Termos de Serviço"
+  paragraph1: "Todo o processamento de dados pessoais e relacionados ao projeto é realizado exclusivamente na União Europeia e em total conformidade com os regulamentos locais de proteção de dados."
+  paragraph2: "A infraestrutura de LLM é alimentada pelo Mixtral, um modelo de código aberto desenvolvido pela Mistral AI. Nossa instância é hospedada na infraestrutura West.ai localizada na Renânia do Norte-Vestfália, Alemanha, garantindo que seus dados permaneçam em território soberano europeu."
+  paragraph3: "Ao prosseguir, você reconhece estas condições. Um cookie persistente será usado por 30 dias para registrar seu consentimento."
+  accept_button: "Eu entendo"
+
+info:
+  title: "Informações e Créditos"
+  back: "Voltar ao chat"
+  about_title: "Sobre o projeto"
+  about_text: "O Orientador de Estudos de Aachen é um assistente baseado em IA projetado para ajudar os estudantes das universidades de Aachen a navegarem na vida académica, encontrarem recursos e obterem respostas a perguntas comuns sobre os seus estudos e a cidade."
+  credits_title: "Créditos"
+  credits_text: "Desenvolvido por Jakob Pütz, Alessandro Kiuila, Gerwin Unger, Benjamin Schmitt e Stavros Fritsching como parte do projeto Go-IT, com o apoio da giftGrün G.m.b.H."

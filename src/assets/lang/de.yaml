@@ -1,0 +1,30 @@
+chat:
+  title: "Studienberater Aachen"
+  placeholder: "Frage etwas..."
+  send: "Senden"
+  select_model: "Modell auswählen"
+  user: "Du"
+  assistant: "Studienberater Aachen"
+  new_chat: "Neuer Chat"
+  warning: "Studienberater Aachen kann Fehler machen. Überprüfen Sie wichtige Informationen."
+  privacy_warning: "Bitte teilen Sie keine privaten Informationen wie Alter, Adresse oder andere persönliche Daten."
+  placeholder_accept_first: "Bitte akzeptieren Sie zuerst die Datenschutzrichtlinie"
+  error_message: "Fehler: Die KI konnte nicht erreicht werden."
+  loading: "Lädt..."
+  models: "Modelle"
+
+privacy:
+  title: "Datenschutz & Nutzungsbedingungen"
+  paragraph1: "Sämtliche Verarbeitungen personenbezogener und projektbezogener Daten erfolgen ausschließlich innerhalb der Europäischen Union und in voller Übereinstimmung mit den geltenden Datenschutzbestimmungen."
+  paragraph2: "Die LLM-Infrastruktur basiert auf Mixtral, einem von Mistral AI entwickelten Open-Source-Modell. Unsere Instanz wird auf einer West.ai-Infrastruktur in Nordrhein-Westfalen, Deutschland, selbst gehostet, wodurch sichergestellt wird, dass Ihre Daten das europäische Hoheitsgebiet nicht verlassen."
+  paragraph3: "Mit dem Fortfahren akzeptieren Sie diese Bedingungen. Ein dauerhafter Cookie wird für die Dauer von 30 Tagen verwendet, um Ihre Zustimmung zu speichern."
+  accept_button: "Ich verstehe"
+
+info:
+  title: "Info & Credits"
+  back: "Zurück zum Chat"
+  about_title: "Über das Projekt"
+  about_text: "Der Studienberater Aachen ist ein KI-gestützter Assistent, der Studierenden an Aachener Hochschulen helfen soll, sich im akademischen Leben zurechtzufinden, Ressourcen zu finden und Antworten auf häufige Fragen zu ihrem Studium und der Stadt zu erhalten."
+  credits_title: "Credits"
+  credits_text: "Entwickelt von Jakob Pütz, Alessandro Kiuila, Gerwin Unger, Benjamin Schmitt und Stavros Fritsching im Rahmen des Projekts Go-IT, unterstützt von der giftGrün G.m.b.H."
+

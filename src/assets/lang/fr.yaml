@@ -1,0 +1,29 @@
+chat:
+  title: "Conseiller d'études à Aix-la-Chapelle"
+  placeholder: "Demandez quelque chose..."
+  send: "Envoyer"
+  select_model: "Choisir le modèle"
+  user: "Vous"
+  assistant: "Conseiller d’études à Aix-la-Chapelle"
+  new_chat: "Nouveau chat"
+  warning: "Conseiller d'études à Aix-la-Chapelle peut faire des erreurs. Vérifiez les informations importantes."
+  privacy_warning: "Veuillez ne pas partager d'informations privées telles que l'âge, l'adresse ou d'autres données personnelles."
+  placeholder_accept_first: "Veuillez d'abord accepter la politique de confidentialité"
+  error_message: "Erreur : Impossible de joindre l'IA."
+  loading: "Chargement..."
+  models: "Modèles"
+
+privacy:
+  title: "Confidentialité des données et conditions d'utilisation"
+  paragraph1: "Tout traitement de données personnelles et liées au projet est effectué exclusivement au sein de l'Union européenne et en totale conformité avec les réglementations locales sur la protection des données."
+  paragraph2: "L'infrastructure LLM est propulsée par Mixtral, un modèle open-source développé par Mistral AI. Notre instance est auto-hébergée sur l'infrastructure West.ai située en Rhénanie-du-Nord-Westphalie, en Allemagne, garantissant que vos données ne quittent jamais le territoire souverain européen."
+  paragraph3: "En continuant, vous reconnaissez ces conditions. Un cookie persistant sera utilisé pendant une durée de 30 jours pour enregistrer votre consentement."
+  accept_button: "Je comprends"
+
+info:
+  title: "Infos & Crédits"
+  back: "Retour au chat"
+  about_title: "À propos du projet"
+  about_text: "Le Conseiller d'études à Aix-la-Chapelle est un assistant basé sur l'IA conçu pour aider les étudiants des universités d'Aix-la-Chapelle à s'orienter dans la vie académique, à trouver des ressources et à obtenir des réponses aux questions courantes sur leurs études et la ville."
+  credits_title: "Crédits"
+  credits_text: "Développé par Jakob Pütz, Alessandro Kiuila, Gerwin Unger, Benjamin Schmitt et Stavros Fritsching dans le cadre du projet Go-IT, soutenu par giftGrün G.m.b.H."
