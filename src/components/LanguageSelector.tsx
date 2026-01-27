@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Flag } from 'lucide-react';
 import { useTranslationProvider } from '../hooks/useTranslationProvider';
 
 export const languages = [
@@ -57,7 +57,9 @@ export default function LanguageSelector({ align = 'left' }: { align?: 'left' | 
                 <span className="text-base">{lang.flag}</span>
                 <span>{lang.name}</span>
                 {i18n.language === lang.code && (
-                  <div className="ml-auto w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.5)]" />
+                  <div className="ml-auto">
+                    <Flag size={15}/>
+                  </div>
                 )}
               </button>
             ))}
