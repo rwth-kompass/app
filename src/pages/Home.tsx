@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { GraduationCap, Info, Loader2, Boxes, Bot, Trash2, ExternalLink } from 'lucide-react';
+import { GraduationCap, Info, Loader2, Boxes, Bot, Trash2 } from 'lucide-react';
 import { useTranslationProvider } from '../hooks/useTranslationProvider';
 import { useNavigate } from 'react-router-dom';
 import LanguageSelector from '../components/LanguageSelector';
