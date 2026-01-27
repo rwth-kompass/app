@@ -7,11 +7,12 @@ chat:
   assistant: "Studieadviseur Aachen"
   new_chat: "Nieuwe chat"
   warning: "Studieadviseur Aachen kan fouten maken. Controleer belangrijke informatie."
-  privacy_warning: "Deel geen privégegevens zoals leeftijd, adres of andere persoonlijke gegevens."
+  privacy_warning: "Deel geen privégegevens zoals leeftijd, adres of andere persoonlijke gegevens. Je chats worden niet opgeslagen."
   placeholder_accept_first: "Accepteer eerst het privacybeleid"
   error_message: "Fout: Kon de AI niet bereiken."
   loading: "Laden..."
   models: "Modellen"
+  clear_chat: "Chat wissen"
 
 privacy:
   title: "Gegevensprivacy & Servicevoorwaarden"

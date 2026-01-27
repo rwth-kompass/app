@@ -7,11 +7,12 @@ chat:
   assistant: "アーヘン学習アドバイザー"
   new_chat: "新しいチャット"
   warning: "アーヘン学習アドバイザーは間違いを犯す可能性があります。重要な情報を確認してください。"
-  privacy_warning: "年齢、住所、その他の個人データなどの個人情報を共有しないでください。"
+  privacy_warning: "年齢、住所、その他の個人データなどの個人情報を共有しないでください。チャットは保存されません。"
   placeholder_accept_first: "まずプライバシーポリシーを承認してください"
   error_message: "エラー：AIに接続できませんでした。"
   loading: "読み込み中..."
   models: "モデル"
+  clear_chat: "チャットを消去"
 
 privacy:
   title: "データプライバシーと利用規約"

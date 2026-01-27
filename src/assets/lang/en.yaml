@@ -7,11 +7,12 @@ chat:
   assistant: "Aachen Study Advisor"
   new_chat: "New Chat"
   warning: "Aachen Study Advisor can make mistakes. Check important info."
-  privacy_warning: "Please do not share private information like age, address, or other personal data."
+  privacy_warning: "Please do not share private information like age, address, or other personal data. Your chats are not saved."
   placeholder_accept_first: "Please accept the privacy policy first"
   error_message: "Error: Could not reach the AI."
   loading: "Loading..."
   models: "Models"
+  clear_chat: "Clear Chat"
 
 privacy:
   title: "Data Privacy & Terms of Service"

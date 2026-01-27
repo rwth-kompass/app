@@ -7,11 +7,12 @@ chat:
   assistant: "Studienberater Aachen"
   new_chat: "Neuer Chat"
   warning: "Studienberater Aachen kann Fehler machen. Überprüfen Sie wichtige Informationen."
-  privacy_warning: "Bitte teilen Sie keine privaten Informationen wie Alter, Adresse oder andere persönliche Daten."
+  privacy_warning: "Bitte teilen Sie keine privaten Informationen wie Alter, Adresse oder andere persönliche Daten. Ihre Chats werden nicht gespeichert."
   placeholder_accept_first: "Bitte akzeptieren Sie zuerst die Datenschutzrichtlinie"
   error_message: "Fehler: Die KI konnte nicht erreicht werden."
   loading: "Lädt..."
   models: "Modelle"
+  clear_chat: "Chat leeren"
 
 privacy:
   title: "Datenschutz & Nutzungsbedingungen"

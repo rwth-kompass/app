@@ -7,11 +7,12 @@ chat:
   assistant: "Consulente per gli studi Aachen"
   new_chat: "Nuova chat"
   warning: "Consulente per gli studi Aachen può commettere errori. Controlla le informazioni importanti."
-  privacy_warning: "Per favore, non condividere informazioni private come età, indirizzo o altri dati personali."
+  privacy_warning: "Per favore, non condividere informazioni private come età, indirizzo o altri dati personali. Le tue chat non vengono salvate."
   placeholder_accept_first: "Per favore, accetta prima l'informativa sulla privacy"
   error_message: "Errore: Impossibile raggiungere l'IA."
   loading: "Caricamento..."
   models: "Modelli"
+  clear_chat: "Cancella chat"
 
 privacy:
   title: "Informativa sulla Privacy e Termini di Servizio"

@@ -7,11 +7,12 @@ chat:
   assistant: "Orientador de estudos Aachen"
   new_chat: "Nova conversa"
   warning: "O Orientador de estudos Aachen pode cometer erros. Verifique informações importantes."
-  privacy_warning: "Por favor, não compartilhe informações privadas como idade, endereço ou outros dados pessoais."
+  privacy_warning: "Por favor, não compartilhe informações privadas como idade, endereço ou outros dados pessoais. Seus chats não são salvos."
   placeholder_accept_first: "Por favor, aceite a política de privacidade primeiro"
   error_message: "Erro: Não foi possível alcançar a IA."
   loading: "Carregando..."
   models: "Modelos"
+  clear_chat: "Limpar chat"
 
 privacy:
   title: "Privacidade de Dados e Termos de Serviço"

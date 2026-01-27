@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { GraduationCap, ChevronDown, Info, Loader2, Boxes, Bot } from 'lucide-react';
+import { GraduationCap, Info, Loader2, Boxes, Bot, Trash2 } from 'lucide-react';
 import { useTranslationProvider } from '../hooks/useTranslationProvider';
+import LanguageSelector from '../components/LanguageSelector';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -17,7 +18,7 @@ interface Model {
 }
 
 export default function Home() {
-  const { t, i18n, changeLanguage } = useTranslationProvider();
+  const { t } = useTranslationProvider();
   const navigate = useNavigate();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
@@ -25,25 +26,12 @@ export default function Home() {
   const [selectedModel, setSelectedModel] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isAccepted, setIsAccepted] = useState(true);
-  const [isLangOpen, setIsLangOpen] = useState(false);
   const [isModelOpen, setIsModelOpen] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
-  const langRef = useRef<HTMLDivElement>(null);
   const modelRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const languages = [
-    { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
-    { code: 'en', name: 'English', flag: '🇺🇸' },
-    { code: 'fr', name: 'Français', flag: '🇫🇷' },
-    { code: 'es', name: 'Español', flag: '🇪🇸' },
-    { code: 'it', name: 'Italiano', flag: '🇮🇹' },
-    { code: 'pt', name: 'Português', flag: '🇵🇹' },
-    { code: 'nl', name: 'Nederlands', flag: '🇳🇱' },
-    { code: 'jp', name: '日本語', flag: '🇯🇵' },
-    { code: 'cn', name: '中文', flag: '🇨🇳' },
-    { code: 'ua', name: 'Українська', flag: '🇺🇦' },
-  ];
+
 
   const SERVER_URL = import.meta.env.VITE_SERVER_URL || 'http://localhost:3003';
 
@@ -53,9 +41,6 @@ export default function Home() {
     fetchModels();
 
     const handleClickOutside = (event: MouseEvent) => {
-      if (langRef.current && !langRef.current.contains(event.target as Node)) {
-        setIsLangOpen(false);
-      }
       if (modelRef.current && !modelRef.current.contains(event.target as Node)) {
         setIsModelOpen(false);
       }
@@ -77,7 +62,7 @@ export default function Home() {
   const handleAccept = () => {
     const date = new Date();
     date.setTime(date.getTime() + (30 * 24 * 60 * 60 * 1000));
-    document.cookie = `privacy-accepted=true; expires=${date.toUTCString()}; path=/`;
+    // document.cookie = `privacy-accepted=true; expires=${date.toUTCString()}; path=/`;
     setIsAccepted(true);
   };
 
@@ -131,42 +116,22 @@ export default function Home() {
   return (
     <div className="flex h-screen w-screen bg-[#161616] text-gray-200 overflow-hidden font-sans">
       <div className="flex-1 flex flex-col relative w-full">
-        <header className="px-4 py-3 flex items-center justify-between bg-[#161616]/80 backdrop-blur-xl sticky top-0 z-0">
+        <header className="px-4 py-3 flex items-center justify-between sticky top-0 z-20 bg-gradient-to-b from-[#161616] via-[#161616]/80 to-transparent">
           <div className="flex-1 flex items-center">
-            <div className="relative" ref={langRef}>
-              <button
-                onClick={() => setIsLangOpen(!isLangOpen)}
-                className="flex items-center gap-2 px-2.5 py-1.5 pl-3 rounded-full bg-white/5 hover:bg-white/10 transition-all border border-white/10 text-[11px] font-bold uppercase tracking-wider"
-              >
-                <span className="text-gray-300">{i18n.language}</span>
-                <ChevronDown size={12} className={`transition-transform duration-200 ${isLangOpen ? 'rotate-180' : ''}`} />
-              </button>
+            <LanguageSelector />
+          </div>
 
-              {isLangOpen && (
-                <div className="absolute top-full left-0 mt-2 w-48 bg-[#212121] border border-white/10 rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200 z-50">
-                  <div className="py-1 max-h-[300px] overflow-y-auto scrollbar-thin scrollbar-thumb-white/10">
-                    {languages.map((lang) => (
-                      <button
-                        key={lang.code}
-                        onClick={() => {
-                          changeLanguage(lang.code);
-                          setIsLangOpen(false);
-                        }}
-                        className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm transition-colors hover:bg-white/5 ${
-                          i18n.language === lang.code ? 'text-white font-bold bg-white/5' : 'text-gray-400'
-                        }`}
-                      >
-                        <span className="text-base">{lang.flag}</span>
-                        <span>{lang.name}</span>
-                        {i18n.language === lang.code && (
-                          <div className="ml-auto w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_8px_rgba(255,255,255,0.5)]" />
-                        )}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
+          <div className="flex-1 flex justify-center">
+            {messages.length > 0 && (
+              <button
+                onClick={() => setMessages([])}
+                className="flex items-center gap-2 px-2.5 py-1.5 rounded-full bg-white/5 hover:bg-white/10 transition-all border border-white/10 text-xs text-gray-300 hover:text-white"
+                title={t('chat.clear_chat')}
+              >
+                <Trash2 size={14} />
+                <span className="hidden md:inline tracking-wider font-medium">{t('chat.clear_chat')}</span>
+              </button>
+            )}
           </div>
 
           <div className="flex-1 flex justify-end">
@@ -240,7 +205,7 @@ export default function Home() {
                       }`}
                       title={models.find(m => m.id === selectedModel)?.name || selectedModel}
                     >
-                      <Boxes size={18} className={isModelOpen ? 'text-white' : 'text-gray-400'} />
+                      <Boxes size={18} className="text-gray-200" />
                     </button>
 
                     {isModelOpen && (
@@ -327,7 +292,10 @@ export default function Home() {
       {!isAccepted && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95 backdrop-blur-md">
           <div className="bg-[#212121] max-w-md w-full rounded-3xl p-5 md:p-7 border border-white/5 shadow-2xl animate-in fade-in zoom-in duration-300">
-            <h3 className="text-xl md:text-2xl font-bold text-white mb-4">{t('privacy.title')}</h3>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xl md:text-2xl font-bold text-white">{t('privacy.title')}</h3>
+              <LanguageSelector align="right"/>
+            </div>
             <div className="text-gray-400 text-sm md:text-[15px] space-y-4 mb-8 leading-relaxed">
               <p dangerouslySetInnerHTML={{ __html: t('privacy.paragraph1') }} />
               <p dangerouslySetInnerHTML={{ __html: t('privacy.paragraph2') }} />

@@ -7,11 +7,12 @@ chat:
   assistant: "Conseiller d’études à Aix-la-Chapelle"
   new_chat: "Nouveau chat"
   warning: "Conseiller d'études à Aix-la-Chapelle peut faire des erreurs. Vérifiez les informations importantes."
-  privacy_warning: "Veuillez ne pas partager d'informations privées telles que l'âge, l'adresse ou d'autres données personnelles."
+  privacy_warning: "Veuillez ne pas partager d'informations privées telles que l'âge, l'adresse ou d'autres données personnelles. Vos chats ne sont pas enregistrés."
   placeholder_accept_first: "Veuillez d'abord accepter la politique de confidentialité"
   error_message: "Erreur : Impossible de joindre l'IA."
   loading: "Chargement..."
   models: "Modèles"
+  clear_chat: "Effacer le chat"
 
 privacy:
   title: "Confidentialité des données et conditions d'utilisation"

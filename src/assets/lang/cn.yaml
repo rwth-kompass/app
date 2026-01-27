@@ -7,11 +7,12 @@ chat:
   assistant: "亚琛学习顾问"
   new_chat: "新对话"
   warning: "亚琛学习顾问可能会出错。请检查重要信息。"
-  privacy_warning: "请勿分享年龄、地址或其他个人数据等私人信息。"
+  privacy_warning: "请勿分享年龄、地址或其他个人数据等私人信息。您的聊天记录不会被保存。"
   placeholder_accept_first: "请先接受隐私政策"
   error_message: "错误：无法连接到AI。"
   loading: "加载中..."
   models: "模型"
+  clear_chat: "清除聊天"
 
 privacy:
   title: "数据隐私与服务条款"
