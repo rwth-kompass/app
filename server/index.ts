@@ -3,6 +3,12 @@ import cors from '@fastify/cors';
 import rateLimit from '@fastify/rate-limit';
 import axios, { AxiosError } from 'axios';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
+import fastifyStatic from '@fastify/static';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 dotenv.config();
 const server = fastify({
@@ -18,9 +24,18 @@ server.register(cors, {
   origin: true
 });
 
+server.register(fastifyStatic, {
+  root: path.join(__dirname, '../dist'),
+  prefix: '/',
+});
+
 const API_URL = process.env.API_URL || 'https://studienberater.giftgruen.com';
 const API_TOKEN = process.env.API_TOKEN;
 const PORT = parseInt(new URL(process.env.VITE_SERVER_URL || 'http://localhost:3003').port) || 3003;
+
+server.get('/', async (request, reply) => {
+  return reply.sendFile('index.html');
+});
 
 server.get('/api/models', async (request, reply) => {
   try {
@@ -80,6 +95,7 @@ server.post('/api/chat/completions', async (request, reply) => {
 const start = async () => {
   try {
     await server.listen({ port: PORT, host: '0.0.0.0' });
+    console.log(`Server running at http://localhost:${PORT}`);
   } catch (err) {
     process.exit(1);
   }
