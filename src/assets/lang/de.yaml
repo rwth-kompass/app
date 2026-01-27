@@ -29,3 +29,11 @@ info:
   credits_title: "Credits"
   credits_text: "Entwickelt von Jakob Pütz, Alessandro Kiuila, Gerwin Unger, Benjamin Schmitt und Stavros Fritsching im Rahmen des Projekts Go-IT, unterstützt von der giftGrün G.m.b.H."
 
+external_link:
+  title: "Externer Link"
+  message: "Sie verlassen nun den Assistenten. Möchten Sie zur folgenden Website weitergeleitet werden?"
+  url_label: "URL:"
+  cancel: "Zurück"
+  continue: "Weiter"
+
+

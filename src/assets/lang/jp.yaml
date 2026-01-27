@@ -27,4 +27,11 @@ info:
   about_title: "プロジェクトについて"
   about_text: "アーヘン学習アドバイザーは、アーヘンの大学の学生が学業生活を送り、リソースを見つけ、学習や街に関する一般的な質問への回答を得るのを支援するために設計されたAIパワードアシスタントです。"
   credits_title: "クレジット"
-  credits_text: "Go-ITプロジェクトの一環として、Jakob Pütz、Alessandro Kiuila、Gerwin Unger、Benjamin Schmitt、Stavros Fritschingによって開発され、giftGrün G.m.b.H.の支援を受けています。"
+  credits_text: "Jakob Pütz, Alessandro Kiuila, Gerwin Unger, Benjamin Schmitt, Stavros Fritsching によって、giftGrün G.m.b.H. の支援を受けた Go-IT プロジェクトの一環として開発されました。"
+
+external_link:
+  title: "外部リンク"
+  message: "アシスタントを離れようとしています。次のウェブサイトに移動しますか？"
+  url_label: "URL:"
+  cancel: "戻る"
+  continue: "続行"

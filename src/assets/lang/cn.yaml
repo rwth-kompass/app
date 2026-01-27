@@ -28,3 +28,10 @@ info:
   about_text: "亚琛学习顾问是一款人工智能辅助工具，旨在帮助亚琛各大学的学生规划学业生活、寻找资源，并解答有关学业和城市的常见问题。"
   credits_title: "致谢"
   credits_text: "由 Jakob Pütz、Alessandro Kiuila、Gerwin Unger、Benjamin Schmitt 和 Stavros Fritsching 作为 Go-IT 项目的一部分开发，并得到 giftGrün G.m.b.H. 的支持。"
+
+external_link:
+  title: "外部链接"
+  message: "您即将离开助手。是否要继续访问以下网站？"
+  url_label: "网址："
+  cancel: "返回"
+  continue: "继续"

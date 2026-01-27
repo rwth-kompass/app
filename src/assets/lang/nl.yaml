@@ -28,3 +28,10 @@ info:
   about_text: "De Studieadviseur Aachen is een door AI aangedreven assistent die is ontworpen om studenten aan de universiteiten van Aken te helpen navigeren door het academische leven, bronnen te vinden en antwoorden te krijgen op veelgestelde vragen over hun studie en de stad."
   credits_title: "Credits"
   credits_text: "Ontwikkeld door Jakob Pütz, Alessandro Kiuila, Gerwin Unger, Benjamin Schmitt en Stavros Fritsching als onderdeel van het Go-IT-project, ondersteund door giftGrün G.m.b.H."
+
+external_link:
+  title: "Externe link"
+  message: "U staat op het punt de assistent te verlaten. Wilt u doorgaan naar de volgende website?"
+  url_label: "URL:"
+  cancel: "Ga terug"
+  continue: "Doorgaan"

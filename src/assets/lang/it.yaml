@@ -28,3 +28,11 @@ info:
   about_text: "Il Consulente per gli Studi di Aquisgrana è un assistente basato sull'IA progettato per aiutare gli studenti delle università di Aquisgrana a orientarsi nella vita accademica, trovare risorse e ottenere risposte a domande comuni sui loro studi e sulla città."
   credits_title: "Crediti"
   credits_text: "Sviluppato da Jakob Pütz, Alessandro Kiuila, Gerwin Unger, Benjamin Schmitt e Stavros Fritsching nell'ambito del progetto Go-IT, con il supporto di giftGrün G.m.b.H."
+
+external_link:
+  title: "Link esterno"
+  message: "Stai per lasciare l'assistente. Vuoi continuare verso il seguente sito web?"
+  url_label: "URL:"
+  cancel: "Torna indietro"
+  continue: "Continua"
+

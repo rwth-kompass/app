@@ -28,3 +28,11 @@ info:
   about_text: "The Aachen Study Advisor is an AI-powered assistant designed to help students at Aachen universities navigate academic life, find resources, and get answers to common questions about their studies and the city."
   credits_title: "Credits"
   credits_text: "Developed by Jakob Pütz, Alessandro Kiuila, Gerwin Unger, Benjamin Schmitt, and Stavros Fritsching as part of the Go-IT project, supported by giftGrün G.m.b.H."
+
+external_link:
+  title: "External Link"
+  message: "You are about to leave the assistant. Do you want to continue to the following website?"
+  url_label: "URL:"
+  cancel: "Go Back"
+  continue: "Continue"
+

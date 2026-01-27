@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
+import { GraduationCap, Info, Loader2, Boxes, Bot, Trash2, ExternalLink } from 'lucide-react';
+import { useTranslationProvider } from '../hooks/useTranslationProvider';
+import { useNavigate } from 'react-router-dom';
+import LanguageSelector from '../components/LanguageSelector';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { GraduationCap, Info, Loader2, Boxes, Bot, Trash2 } from 'lucide-react';
-import { useTranslationProvider } from '../hooks/useTranslationProvider';
-import LanguageSelector from '../components/LanguageSelector';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 interface Message {
@@ -27,6 +27,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
   const [isAccepted, setIsAccepted] = useState(true);
   const [isModelOpen, setIsModelOpen] = useState(false);
+  const [externalLink, setExternalLink] = useState<{ url: string; isOpen: boolean }>({ url: '', isOpen: false });
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const modelRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -178,7 +179,16 @@ export default function Home() {
                         <ReactMarkdown 
                           remarkPlugins={[remarkGfm]}
                           components={{
-                            a: ({ node, ...props }) => <a {...props} target="_blank" rel="noopener noreferrer" />
+                            a: ({ node, ...props }) => (
+                              <a 
+                                {...props} 
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  setExternalLink({ url: props.href || '', isOpen: true });
+                                }}
+                                className="text-white underline decoration-white/20 hover:decoration-white/50 transition-colors cursor-pointer"
+                              />
+                            )
                           }}
                         >
                           {isPrivacy ? msg.content.trim().replace(privacyRegex, '').trim() : msg.content}
@@ -314,6 +324,48 @@ export default function Home() {
             >
               {t('privacy.accept_button')}
             </button>
+          </div>
+        </div>
+      )}
+
+      {externalLink.isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+          <div className="bg-[#212121] max-w-lg w-full rounded-[24px] p-6 md:p-7 border border-white/10 shadow-2xl animate-in fade-in zoom-in duration-200">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-bold text-white">{t('external_link.title')}</h3>
+              <LanguageSelector align="right" />
+            </div>
+            
+            <p className="text-gray-400 text-sm leading-relaxed mb-4">
+              {t('external_link.message')}
+            </p>
+
+            <div className="bg-black/20 rounded-xl p-3 mb-6 border border-white/5">
+              <span className="text-[9px] font-bold text-gray-500 uppercase tracking-widest block mb-0.5">
+                {t('external_link.url_label')}
+              </span>
+              <span className="text-xs text-gray-400 break-all font-mono opacity-80">
+                {externalLink.url}
+              </span>
+            </div>
+
+            <div className="flex gap-3">
+              <button
+                onClick={() => setExternalLink({ ...externalLink, isOpen: false })}
+                className="flex-1 py-3 bg-white/5 text-gray-400 text-sm font-bold rounded-xl hover:bg-white/10 transition-all active:scale-[0.98]"
+              >
+                {t('external_link.cancel')}
+              </button>
+              <button
+                onClick={() => {
+                  window.open(externalLink.url, '_blank', 'noopener,noreferrer');
+                  setExternalLink({ ...externalLink, isOpen: false });
+                }}
+                className="flex-1 py-3 bg-white text-black text-sm font-bold rounded-xl hover:bg-gray-200 transition-all active:scale-[0.98]"
+              >
+                {t('external_link.continue')}
+              </button>
+            </div>
           </div>
         </div>
       )}
