@@ -202,7 +202,7 @@ export default function Home() {
   };
 
   return (
-    <div className={`flex h-screen w-screen overflow-hidden font-sans transition-colors duration-300 ${
+    <div className={`flex min-h-[100dvh] w-screen overflow-hidden font-sans transition-colors duration-300 ${
       isLightMode ? 'bg-[#f5f5f5] text-gray-800' : 'bg-[#161616] text-gray-200'
     }`}>
       <div className="flex-1 flex flex-col relative w-full">
