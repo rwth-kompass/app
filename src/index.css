@@ -172,3 +172,71 @@ html.light .markdown-content a {
 html.light .markdown-content a:hover {
   color: #1d4ed8;
 }
+
+/* Table styles */
+.markdown-content .table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  margin: 0.75rem 0;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.markdown-content table {
+  width: 100%;
+  min-width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.markdown-content thead {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.markdown-content th,
+.markdown-content td {
+  padding: 0.75rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.markdown-content th {
+  font-weight: 600;
+  color: white;
+  white-space: nowrap;
+}
+
+.markdown-content td {
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.markdown-content tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.markdown-content tbody tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+/* Light mode table styles */
+html.light .markdown-content .table-wrapper {
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+html.light .markdown-content thead {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+html.light .markdown-content th,
+html.light .markdown-content td {
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+html.light .markdown-content th {
+  color: #1f2937;
+}
+
+html.light .markdown-content tbody tr:hover {
+  background: rgba(0, 0, 0, 0.02);
+}

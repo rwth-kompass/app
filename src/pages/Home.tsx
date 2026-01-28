@@ -273,10 +273,13 @@ export default function Home() {
                 const abortRegex = /^\[(ABBRUCH|ABORT)\]/i;
                 const isPrivacy = msg.role === 'assistant' && privacyRegex.test(msg.content.trim());
                 const isAbort = msg.role === 'assistant' && abortRegex.test(msg.content.trim());
+                const hasTable = msg.role === 'assistant' && /\|.+\|/.test(msg.content) && msg.content.includes('|---');
                 
                 return (
                   <div key={idx} className={`mb-6 md:mb-8 flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                    <div className={`max-w-[90%] md:max-w-[85%] px-3 py-2 md:px-4 md:py-2.5 rounded-[20px] md:rounded-[24px] transition-colors duration-300 ${
+                    <div className={`px-3 py-2 md:px-4 md:py-2.5 rounded-[20px] md:rounded-[24px] transition-colors duration-300 ${
+                      hasTable ? 'max-w-full w-full' : 'max-w-[90%] md:max-w-[85%]'
+                    } ${
                       msg.role === 'user' 
                         ? isLightMode
                           ? 'bg-white text-gray-800 rounded-br-lg border border-black/[0.08] shadow-sm'
@@ -321,8 +324,17 @@ export default function Home() {
                                     e.preventDefault();
                                     setExternalLink({ url: props.href || '', isOpen: true });
                                   }}
-                                  className="text-white underline decoration-white/20 hover:decoration-white/50 transition-colors cursor-pointer"
+                                  className={`underline transition-colors cursor-pointer ${
+                                    isLightMode 
+                                      ? 'text-blue-600 decoration-blue-600/30 hover:decoration-blue-600/60' 
+                                      : 'text-white decoration-white/20 hover:decoration-white/50'
+                                  }`}
                                 />
+                              ),
+                              table: ({ node, ...props }) => (
+                                <div className="table-wrapper">
+                                  <table {...props} />
+                                </div>
                               )
                             }}
                           >
