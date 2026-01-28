@@ -270,7 +270,9 @@ export default function Home() {
             ) : (
               messages.map((msg, idx) => {
                 const privacyRegex = /^\[(DATENSCHUTZ|PRIVACY)\]/i;
+                const abortRegex = /^\[(ABBRUCH|ABORT)\]/i;
                 const isPrivacy = msg.role === 'assistant' && privacyRegex.test(msg.content.trim());
+                const isAbort = msg.role === 'assistant' && abortRegex.test(msg.content.trim());
                 
                 return (
                   <div key={idx} className={`mb-6 md:mb-8 flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
@@ -279,17 +281,23 @@ export default function Home() {
                         ? isLightMode
                           ? 'bg-white text-gray-800 rounded-br-lg border border-black/[0.08] shadow-sm'
                           : 'bg-[#212121] text-white rounded-br-lg border border-white/[0.05]'
-                        : isPrivacy
+                        : isAbort
                           ? isLightMode
-                            ? 'bg-yellow-500/15 border border-yellow-500/50 text-yellow-800 rounded-bl-lg shadow-[0_0_20px_rgba(234,179,8,0.1)]'
-                            : 'bg-yellow-500/10 border border-yellow-500/40 text-yellow-100 rounded-bl-lg shadow-[0_0_20px_rgba(234,179,8,0.08)]'
-                          : isLightMode ? 'text-gray-800' : 'text-gray-200'
+                            ? 'bg-red-500/15 border border-red-500/50 text-red-800 rounded-bl-lg shadow-[0_0_20px_rgba(239,68,68,0.1)]'
+                            : 'bg-red-500/10 border border-red-500/40 text-red-100 rounded-bl-lg shadow-[0_0_20px_rgba(239,68,68,0.08)]'
+                          : isPrivacy
+                            ? isLightMode
+                              ? 'bg-yellow-500/15 border border-yellow-500/50 text-yellow-800 rounded-bl-lg shadow-[0_0_20px_rgba(234,179,8,0.1)]'
+                              : 'bg-yellow-500/10 border border-yellow-500/40 text-yellow-100 rounded-bl-lg shadow-[0_0_20px_rgba(234,179,8,0.08)]'
+                            : isLightMode ? 'text-gray-800' : 'text-gray-200'
                     }`}>
                       {msg.role === 'assistant' && (
                         <div className={`flex items-center gap-2 mb-1.5 text-xs transition-colors duration-300 ${
-                          isPrivacy 
-                            ? isLightMode ? 'text-yellow-700 opacity-100 font-bold' : 'text-yellow-400 opacity-100 font-bold' 
-                            : 'opacity-50'
+                          isAbort
+                            ? isLightMode ? 'text-red-700 opacity-100 font-bold' : 'text-red-400 opacity-100 font-bold'
+                            : isPrivacy 
+                              ? isLightMode ? 'text-yellow-700 opacity-100 font-bold' : 'text-yellow-400 opacity-100 font-bold' 
+                              : 'opacity-50'
                         }`}>
                           <GraduationCap size={14} />
                           {t('chat.assistant')}
@@ -318,7 +326,11 @@ export default function Home() {
                               )
                             }}
                           >
-                            {isPrivacy ? msg.content.trim().replace(privacyRegex, '').trim() : msg.content}
+                            {isAbort 
+                              ? msg.content.trim().replace(abortRegex, '').trim() 
+                              : isPrivacy 
+                                ? msg.content.trim().replace(privacyRegex, '').trim() 
+                                : msg.content}
                           </ReactMarkdown>
                         )}
                       </div>
