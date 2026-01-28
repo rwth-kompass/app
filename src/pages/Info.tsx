@@ -57,6 +57,8 @@ export default function InfoPage() {
 
           <footer className="text-center opacity-30 text-xs">
             © {new Date().getFullYear()} {t('chat.title')} • Aachen, Germany
+            <br />
+            https://github.com/rwth-kompass/app
           </footer>
         </div>
       </main>

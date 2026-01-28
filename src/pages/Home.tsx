@@ -25,14 +25,13 @@ export default function Home() {
   const [models, setModels] = useState<Model[]>([]);
   const [selectedModel, setSelectedModel] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isStreaming, setIsStreaming] = useState(false);
   const [isAccepted, setIsAccepted] = useState(true);
   const [isModelOpen, setIsModelOpen] = useState(false);
   const [externalLink, setExternalLink] = useState<{ url: string; isOpen: boolean }>({ url: '', isOpen: false });
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const modelRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-
-
 
   const SERVER_URL = import.meta.env.VITE_SERVER_URL || 'http://localhost:3003';
 
@@ -98,19 +97,94 @@ export default function Home() {
     setInput('');
     setIsLoading(true);
 
+    let assistantMessageAdded = false;
+    
     try {
-      const response = await axios.post(`${SERVER_URL}/api/chat/completions`, {
-        model: selectedModel,
-        messages: [...messages, userMessage],
+      const response = await fetch(`${SERVER_URL}/api/chat/completions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          model: selectedModel,
+          messages: [...messages, userMessage],
+          stream: true,
+        }),
       });
 
-      const assistantMessage: Message = response.data.choices[0].message;
-      setMessages((prev) => [...prev, assistantMessage]);
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Response not ok:', errorText);
+        throw new Error('Chat completion failed');
+      }
+
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+      let assistantContent = '';
+      let buffer = '';
+
+      setMessages((prev) => [...prev, { role: 'assistant', content: '' }]);
+      assistantMessageAdded = true;
+      setIsStreaming(true);
+
+      if (reader) {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          const chunk = decoder.decode(value, { stream: true });
+          const lines = (buffer + chunk).split('\n');
+          buffer = lines.pop() || '';
+
+          for (const line of lines) {
+            const trimmedLine = line.trim();
+            if (!trimmedLine) continue;
+            if (trimmedLine.startsWith('data: ')) {
+              const data = trimmedLine.slice(6).trim();
+              if (data === '[DONE]') {
+                continue; 
+              }
+              try {
+                const parsed = JSON.parse(data);
+                const content = parsed.choices[0]?.delta?.content || '';
+                if (content) {
+                  assistantContent += content;
+                  setMessages((prev) => {
+                    const newMessages = [...prev];
+                    const lastMessage = newMessages[newMessages.length - 1];
+                    if (lastMessage && lastMessage.role === 'assistant') {
+                      return [
+                        ...newMessages.slice(0, -1),
+                        { ...lastMessage, content: assistantContent }
+                      ];
+                    }
+                    return newMessages;
+                  });
+                }
+              } catch (e) {
+                console.error('Error parsing stream chunk', e, trimmedLine);
+              }
+            }
+          }
+        }
+      }
     } catch (error) {
-      console.error('Error sending message:', error);
-      setMessages((prev) => [...prev, { role: 'assistant', content: t('chat.error_message') }]);
+      setMessages((prev) => {
+        if (assistantMessageAdded) {
+          const newMessages = [...prev];
+          const lastMessage = newMessages[newMessages.length - 1];
+          if (lastMessage && lastMessage.role === 'assistant') {
+            return [
+              ...newMessages.slice(0, -1),
+              { ...lastMessage, content: t('chat.error_message') }
+            ];
+          }
+        }
+        return [...prev, { role: 'assistant', content: t('chat.error_message') }];
+      });
     } finally {
       setIsLoading(false);
+      setIsStreaming(false);
     }
   };
 
@@ -176,23 +250,31 @@ export default function Home() {
                         </div>
                       )}
                       <div className="text-sm md:text-[15px] leading-relaxed break-words markdown-content">
-                        <ReactMarkdown 
-                          remarkPlugins={[remarkGfm]}
-                          components={{
-                            a: ({ node, ...props }) => (
-                              <a 
-                                {...props} 
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  setExternalLink({ url: props.href || '', isOpen: true });
-                                }}
-                                className="text-white underline decoration-white/20 hover:decoration-white/50 transition-colors cursor-pointer"
-                              />
-                            )
-                          }}
-                        >
-                          {isPrivacy ? msg.content.trim().replace(privacyRegex, '').trim() : msg.content}
-                        </ReactMarkdown>
+                        {msg.role === 'assistant' && msg.content === '' && isStreaming ? (
+                          <div className="flex items-center gap-1.5 py-1">
+                            <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
+                            <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
+                            <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
+                          </div>
+                        ) : (
+                          <ReactMarkdown 
+                            remarkPlugins={[remarkGfm]}
+                            components={{
+                              a: ({ node, ...props }) => (
+                                <a 
+                                  {...props} 
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    setExternalLink({ url: props.href || '', isOpen: true });
+                                  }}
+                                  className="text-white underline decoration-white/20 hover:decoration-white/50 transition-colors cursor-pointer"
+                                />
+                              )
+                            }}
+                          >
+                            {isPrivacy ? msg.content.trim().replace(privacyRegex, '').trim() : msg.content}
+                          </ReactMarkdown>
+                        )}
                       </div>
                     </div>
                   </div>

@@ -57,7 +57,7 @@ server.get('/api/models', async (request, reply) => {
           modelsData = data;
           break;
         }
-      } catch (e) {
+      } catch {
         // Continue to next endpoint
       }
     }
@@ -79,13 +79,41 @@ server.post('/api/chat/completions', async (request, reply) => {
       }
     }
 
-    const response = await axios.post(`${API_URL}/api/chat/completions`, request.body, {
-      headers: {
-        'Content-Type': 'application/json',
-        ...(API_TOKEN ? { 'Authorization': `Bearer ${API_TOKEN}` } : {})
+    if (body.stream === true) {
+      try {
+        const response = await axios.post(`${API_URL}/api/chat/completions`, body, {
+          headers: {
+            'Content-Type': 'application/json',
+            ...(API_TOKEN ? { 'Authorization': `Bearer ${API_TOKEN}` } : {})
+          },
+          responseType: 'stream'
+        });
+
+        reply
+          .code(200)
+          .header('Content-Type', 'text/event-stream')
+          .header('Cache-Control', 'no-cache')
+          .header('Connection', 'keep-alive')
+          .header('X-Accel-Buffering', 'no');
+
+        return reply.send(response.data);
+      } catch (streamError: any) {
+        console.error('Error initiating stream:', streamError.message);
+        if (streamError.response) {
+          console.error('Error response data:', streamError.response.data);
+          console.error('Error response status:', streamError.response.status);
+        }
+        throw streamError;
       }
-    });
-    return response.data;
+    } else {
+      const response = await axios.post(`${API_URL}/api/chat/completions`, body, {
+        headers: {
+          'Content-Type': 'application/json',
+          ...(API_TOKEN ? { 'Authorization': `Bearer ${API_TOKEN}` } : {})
+        }
+      });
+      return response.data;
+    }
   } catch (error) {
     const axiosError = error as AxiosError;
     reply.status(axiosError.response?.status || 500).send(axiosError.response?.data || { error: 'Chat completion failed' });
