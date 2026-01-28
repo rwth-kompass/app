@@ -213,7 +213,7 @@ export default function Home() {
             <LanguageSelector />
             <button
               onClick={() => setIsLightMode(!isLightMode)}
-              className={`flex items-center justify-center w-8 h-8 rounded-full transition-all duration-300 border ${
+              className={`flex items-center justify-center w-7.5 h-7.5 rounded-full transition-all duration-300 border ${
                 isLightMode 
                   ? 'bg-black/5 hover:bg-black/10 border-black/10 text-gray-600' 
                   : 'bg-white/5 hover:bg-white/10 border-white/10 text-gray-300'
