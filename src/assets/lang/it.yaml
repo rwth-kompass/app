@@ -13,6 +13,17 @@ chat:
   loading: "Caricamento..."
   models: "Modelli"
   clear_chat: "Cancella chat"
+  starter_questions:
+    q1: "Mi sono diplomato e non so cosa posso studiare"
+    q2: "Mi interessa la matematica, ma non so ancora se voglio studiare"
+    q3: "Non ho idea di cosa mi interessi e ho bisogno di aiuto per trovare un corso di laurea"
+    q4: "È meglio la RWTH o la FH Aachen per studiare?"
+    q5: "Mi interessa la tecnologia, cosa posso studiare?"
+    q6: "Mi interessa l'economia, cosa posso studiare?"
+    q7: "Mi piace comunicare con le altre persone, cosa posso studiare?"
+    q8: "Mi interessa la medicina, cosa posso studiare?"
+    q9: "Ho fatto informatica a scuola, cosa posso studiare?"
+    q10: "Mi piace giocare ai videogiochi, cosa si può studiare?"
 
 privacy:
   title: "Informativa sulla Privacy e Termini di Servizio"

@@ -124,7 +124,7 @@ const start = async () => {
   try {
     await server.listen({ port: PORT, host: '0.0.0.0' });
     console.log(`Server running at http://localhost:${PORT}`);
-  } catch (err) {
+  } catch {
     process.exit(1);
   }
 };

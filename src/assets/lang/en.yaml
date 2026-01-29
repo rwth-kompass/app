@@ -13,6 +13,17 @@ chat:
   loading: "Loading..."
   models: "Models"
   clear_chat: "Clear Chat"
+  starter_questions:
+    q1: "I have graduated and don't know what I can study"
+    q2: "I'm interested in math, but don't know yet if I want to study"
+    q3: "I have no idea what interests me and need help finding a degree program"
+    q4: "Is RWTH or FH Aachen better for studying?"
+    q5: "I'm interested in technology, what can I study?"
+    q6: "I'm interested in economics, what can I study?"
+    q7: "I like communicating with other people, what can I study?"
+    q8: "I'm interested in medicine, what can I study?"
+    q9: "I had computer science in school, what can I study?"
+    q10: "I like playing video games, what can I study?"
 
 privacy:
   title: "Data Privacy & Terms of Service"

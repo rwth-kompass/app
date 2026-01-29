@@ -13,6 +13,17 @@ chat:
   loading: "Lädt..."
   models: "Modelle"
   clear_chat: "Chat leeren"
+  starter_questions:
+    q1: "Ich habe meinen Abschluss gemacht und weiß nicht was ich studieren kann"
+    q2: "Ich interessiere mich für Mathe, weiß aber noch nicht ob ich studieren möchte"
+    q3: "Ich weiß überhaupt nicht was mich interessiert und brauche Hilfe dabei einen Studiengang zu finden"
+    q4: "Ist die RWTH oder die FH Aachen besser zum studieren?"
+    q5: "Ich interessiere mich für Technik, was kann ich studieren?"
+    q6: "Ich interessiere mich für Wirtschaft, was kann ich studieren?"
+    q7: "Ich kommuniziere gerne mit anderen Menschen, was kann ich studieren?"
+    q8: "Ich interessiere mich für Medizin, was kann ich studieren?"
+    q9: "Ich hatte Informatik in der Schule, was kann ich studieren?"
+    q10: "Ich spiele gerne Videospiele, was kann man studieren?"
 
 privacy:
   title: "Datenschutz & Nutzungsbedingungen"

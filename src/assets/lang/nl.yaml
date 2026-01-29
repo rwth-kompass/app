@@ -13,6 +13,17 @@ chat:
   loading: "Laden..."
   models: "Modellen"
   clear_chat: "Chat wissen"
+  starter_questions:
+    q1: "Ik ben afgestudeerd en weet niet wat ik kan studeren"
+    q2: "Ik ben geïnteresseerd in wiskunde, maar weet nog niet of ik wil studeren"
+    q3: "Ik heb geen idee wat me interesseert en heb hulp nodig bij het vinden van een opleiding"
+    q4: "Is de RWTH of de FH Aachen beter om te studeren?"
+    q5: "Ik ben geïnteresseerd in techniek, wat kan ik studeren?"
+    q6: "Ik ben geïnteresseerd in economie, wat kan ik studeren?"
+    q7: "Ik communiceer graag met andere mensen, wat kan ik studeren?"
+    q8: "Ik ben geïnteresseerd in geneeskunde, wat kan ik studeren?"
+    q9: "Ik had informatica op school, wat kan ik studeren?"
+    q10: "Ik speel graag videospelletjes, wat kun je studeren?"
 
 privacy:
   title: "Gegevensprivacy & Servicevoorwaarden"

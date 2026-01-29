@@ -13,6 +13,17 @@ chat:
   loading: "Chargement..."
   models: "Modèles"
   clear_chat: "Effacer le chat"
+  starter_questions:
+    q1: "Je suis diplômé et je ne sais pas ce que je peux étudier"
+    q2: "Je m'intéresse aux mathématiques, mais je ne sais pas encore si je veux étudier"
+    q3: "Je n'ai aucune idée de ce qui m'intéresse et j'ai besoin d'aide pour trouver un programme d'études"
+    q4: "Est-ce que la RWTH ou la FH Aachen est meilleure pour étudier ?"
+    q5: "Je m'intéresse à la technologie, que puis-je étudier ?"
+    q6: "Je m'intéresse à l'économie, que puis-je étudier ?"
+    q7: "J'aime communiquer avec les autres, que puis-je étudier ?"
+    q8: "Je m'intéresse à la médecine, que puis-je étudier ?"
+    q9: "J'ai fait de l'informatique à l'école, que puis-je étudier ?"
+    q10: "J'aime jouer aux jeux vidéo, que peut-on étudier ?"
 
 privacy:
   title: "Confidentialité des données et conditions d'utilisation"

@@ -13,6 +13,7 @@ export const languages = [
   { code: 'jp', name: '日本語', flag: '🇯🇵' },
   { code: 'cn', name: '中文', flag: '🇨🇳' },
   { code: 'ua', name: 'Українська', flag: '🇺🇦' },
+  { code: 'ru', name: 'Русский', flag: '🇷🇺' },
 ];
 
 export default function LanguageSelector({ align = 'left' }: { align?: 'left' | 'right' }) {

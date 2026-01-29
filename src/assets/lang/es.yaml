@@ -13,6 +13,17 @@ chat:
   loading: "Cargando..."
   models: "Modelos"
   clear_chat: "Borrar chat"
+  starter_questions:
+    q1: "Me he graduado y no sé qué puedo estudiar"
+    q2: "Me interesan las matemáticas, pero aún no sé si quiero estudiar"
+    q3: "No tengo idea de lo que me interesa y necesito ayuda para encontrar una carrera"
+    q4: "¿Es mejor la RWTH o la FH Aachen para estudiar?"
+    q5: "Me interesa la tecnología, ¿qué puedo estudiar?"
+    q6: "Me interesa la economía, ¿qué puedo estudiar?"
+    q7: "Me gusta comunicarme con otras personas, ¿qué puedo estudiar?"
+    q8: "Me interesa la medicina, ¿qué puedo estudiar?"
+    q9: "Tuve informática en la escuela, ¿qué puedo estudiar?"
+    q10: "Me gusta jugar videojuegos, ¿qué se puede estudiar?"
 
 privacy:
   title: "Privacidad de Datos y Términos de Servicio"

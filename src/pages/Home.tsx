@@ -28,6 +28,9 @@ export default function Home() {
   const [isStreaming, setIsStreaming] = useState(false);
   const [isAccepted, setIsAccepted] = useState(true);
   const [isModelOpen, setIsModelOpen] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
+  const [shouldAutoScroll, setShouldAutoScroll] = useState(true);
+  const [starterQuestions, setStarterQuestions] = useState<string[]>([]);
   const [externalLink, setExternalLink] = useState<{ url: string; isOpen: boolean }>({ url: '', isOpen: false });
   const [isLightMode, setIsLightMode] = useState(() => {
     const saved = localStorage.getItem('theme');
@@ -36,6 +39,8 @@ export default function Home() {
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const modelRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const contentQueueRef = useRef<string>('');
+  const animationFrameRef = useRef<number | null>(null);
 
   const SERVER_URL = import.meta.env.VITE_SERVER_URL || 'http://localhost:3003';
 
@@ -59,8 +64,17 @@ export default function Home() {
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
+    generateStarterQuestions();
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  const generateStarterQuestions = () => {
+    const questions = [
+      'q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7', 'q8', 'q9', 'q10'
+    ];
+    const shuffled = [...questions].sort(() => 0.5 - Math.random());
+    setStarterQuestions(shuffled.slice(0, 4));
+  };
 
   useEffect(() => {
     if (textareaRef.current) {
@@ -80,8 +94,11 @@ export default function Home() {
   };
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+    if (shouldAutoScroll) {
+      scrollToBottom();
+      setTimeout(scrollToBottom, 50);
+    }
+  }, [messages, isStreaming, isTyping, shouldAutoScroll]);
 
   const fetchModels = async () => {
     try {
@@ -99,16 +116,73 @@ export default function Home() {
   };
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    if (messagesEndRef.current) {
+      const scrollContainer = messagesEndRef.current.closest('.overflow-y-auto');
+      if (scrollContainer) {
+        scrollContainer.scrollTop = scrollContainer.scrollHeight;
+      }
+    }
   };
 
-  const handleSend = async () => {
-    if (!input.trim() || input.length > 1000 || isLoading || !selectedModel) return;
+  useEffect(() => {
+    if (isStreaming || isTyping) {
+      const startTyping = () => {
+        if (contentQueueRef.current.length > 0) {
+          setIsTyping(true);
+          const charsToAdd = Math.max(1, Math.floor(contentQueueRef.current.length / 20));
+          const chunk = contentQueueRef.current.slice(0, charsToAdd);
+          contentQueueRef.current = contentQueueRef.current.slice(charsToAdd);
 
-    const userMessage: Message = { role: 'user', content: input };
+          setMessages((prev) => {
+            const newMessages = [...prev];
+            const lastMessage = newMessages[newMessages.length - 1];
+            if (lastMessage && lastMessage.role === 'assistant') {
+              const updatedContent = lastMessage.content + chunk;
+              if (updatedContent !== lastMessage.content) {
+                newMessages[newMessages.length - 1] = {
+                  ...lastMessage,
+                  content: updatedContent
+                };
+                return newMessages;
+              }
+            }
+            return prev;
+          });
+
+          animationFrameRef.current = requestAnimationFrame(startTyping);
+        } else if (isStreaming) {
+          animationFrameRef.current = requestAnimationFrame(startTyping);
+        } else {
+          setIsTyping(false);
+        }
+      };
+
+      animationFrameRef.current = requestAnimationFrame(startTyping);
+    } else {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    }
+
+    return () => {
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
+      }
+    };
+  }, [isStreaming, isTyping]);
+
+  const handleSend = async (overrideInput?: string) => {
+    const textToSend = overrideInput !== undefined ? overrideInput : input;
+    if (!textToSend.trim() || textToSend.length > 1000 || isLoading || !selectedModel) return;
+
+    const userMessage: Message = { role: 'user', content: textToSend };
     setMessages((prev) => [...prev, userMessage]);
-    setInput('');
+    if (overrideInput === undefined) {
+      setInput('');
+    }
     setIsLoading(true);
+    contentQueueRef.current = '';
+    setShouldAutoScroll(true);
 
     let assistantMessageAdded = false;
     
@@ -133,7 +207,6 @@ export default function Home() {
 
       const reader = response.body?.getReader();
       const decoder = new TextDecoder();
-      let assistantContent = '';
       let buffer = '';
 
       setMessages((prev) => [...prev, { role: 'assistant', content: '' }]);
@@ -161,18 +234,8 @@ export default function Home() {
                 const parsed = JSON.parse(data);
                 const content = parsed.choices[0]?.delta?.content || '';
                 if (content) {
-                  assistantContent += content;
-                  setMessages((prev) => {
-                    const newMessages = [...prev];
-                    const lastMessage = newMessages[newMessages.length - 1];
-                    if (lastMessage && lastMessage.role === 'assistant') {
-                      return [
-                        ...newMessages.slice(0, -1),
-                        { ...lastMessage, content: assistantContent }
-                      ];
-                    }
-                    return newMessages;
-                  });
+                  contentQueueRef.current += content;
+                  if (!isTyping) setIsTyping(true);
                 }
               } catch (e) {
                 console.error('Error parsing stream chunk', e, trimmedLine);
@@ -181,7 +244,7 @@ export default function Home() {
           }
         }
       }
-    } catch (error) {
+    } catch {
       setMessages((prev) => {
         if (assistantMessageAdded) {
           const newMessages = [...prev];
@@ -201,13 +264,26 @@ export default function Home() {
     }
   };
 
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const target = e.currentTarget;
+    // Use a slightly larger buffer for isAtBottom to handle various zoom levels/resolutions
+    const isAtBottom = target.scrollHeight - target.scrollTop <= target.clientHeight + 50;
+    if (isStreaming || isTyping) {
+      if (isAtBottom) {
+        setShouldAutoScroll(true);
+      } else {
+        setShouldAutoScroll(false);
+      }
+    }
+  };
+
   return (
-    <div className={`flex min-h-[100dvh] w-screen overflow-hidden font-sans transition-colors duration-300 ${
+    <div className={`flex h-[100dvh] w-full overflow-hidden font-sans transition-colors duration-300 ${
       isLightMode ? 'bg-[#f5f5f5] text-gray-800' : 'bg-[#161616] text-gray-200'
     }`}>
-      <div className="flex-1 flex flex-col relative w-full">
-        <header className={`px-4 py-3 flex items-center justify-between sticky top-0 z-20 transition-all duration-300 bg-gradient-to-b ${
-          isLightMode ? 'from-[#f5f5f5] via-[#f5f5f5]/80' : 'from-[#161616] via-[#161616]/80'
+      <div className="flex-1 flex flex-col relative w-full h-full">
+        <header className={`px-4 py-3 flex items-center justify-between fixed top-0 left-0 right-0 z-30 transition-all duration-300 bg-gradient-to-b ${
+          isLightMode ? 'from-[#f5f5f5] via-[#f5f5f5]/95' : 'from-[#161616] via-[#161616]/95'
         } to-transparent`}>
           <div className="flex-1 flex items-center gap-2">
             <LanguageSelector />
@@ -227,7 +303,10 @@ export default function Home() {
           <div className="flex-1 flex justify-center">
             {messages.length > 0 && (
               <button
-                onClick={() => setMessages([])}
+                onClick={() => {
+                  setMessages([]);
+                  generateStarterQuestions();
+                }}
                 className={`flex items-center gap-2 px-2.5 py-1.5 rounded-full transition-all duration-300 border text-xs ${
                   isLightMode 
                     ? 'bg-black/5 hover:bg-black/10 border-black/10 text-gray-600 hover:text-gray-900' 
@@ -257,8 +336,11 @@ export default function Home() {
           </div>
         </header>
 
-        <div className="flex-1 overflow-y-auto px-4 md:px-0 relative z-10 -mt-14 pt-14">
-          <div className="max-w-3xl mx-auto py-8">
+        <div 
+          className="flex-1 overflow-y-auto px-4 md:px-0 relative z-10"
+          onScroll={handleScroll}
+        >
+          <div className="max-w-3xl mx-auto py-8 pt-24 pb-48">
             {messages.length === 0 ? (
               <div className={`h-full flex flex-col items-center justify-center mt-20 md:mt-32 opacity-50 px-4 text-center transition-colors duration-300 ${
                 isLightMode ? 'text-gray-600' : ''
@@ -266,15 +348,34 @@ export default function Home() {
                 <GraduationCap size={64} className="md:w-20 md:h-20" />
                 <h2 className="text-xl md:text-2xl font-semibold mt-4">{t('chat.title')}</h2>
                 <p className={`text-xs md:text-sm mt-2 max-w-md transition-colors duration-300 ${isLightMode ? 'text-gray-500' : 'text-gray-400'}`}>{t('chat.privacy_warning')}</p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-8 max-w-2xl w-full px-4">
+                  {starterQuestions.map((qKey) => (
+                    <button
+                      key={qKey}
+                      onClick={() => handleSend(t(`chat.starter_questions.${qKey}`))}
+                      disabled={!isAccepted || isLoading}
+                      className={`text-left p-4 rounded-xl border text-sm transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] ${
+                        isLightMode
+                          ? 'bg-white border-black/5 hover:border-black/20 text-gray-700 shadow-sm'
+                          : 'bg-white/5 border-white/5 hover:border-white/20 text-gray-300 shadow-lg'
+                      }`}
+                    >
+                      {t(`chat.starter_questions.${qKey}`)}
+                    </button>
+                  ))}
+                </div>
               </div>
             ) : (
               messages.map((msg, idx) => {
                 const privacyRegex = /^\[(DATENSCHUTZ|PRIVACY)\]/i;
                 const abortRegex = /^\[(ABBRUCH|ABORT)\]/i;
+                const offTopicRegex = /^\[OFF-TOPIC\]/i;
                 const isPrivacy = msg.role === 'assistant' && privacyRegex.test(msg.content.trim());
                 const isAbort = msg.role === 'assistant' && abortRegex.test(msg.content.trim());
+                const isOffTopic = msg.role === 'assistant' && offTopicRegex.test(msg.content.trim());
                 const hasTable = msg.role === 'assistant' && /\|.+\|/.test(msg.content) && msg.content.includes('|---');
-                
+
                 return (
                   <div key={idx} className={`mb-6 md:mb-8 flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                     <div className={`px-3 py-2 md:px-4 md:py-2.5 rounded-[20px] md:rounded-[24px] transition-colors duration-300 ${
@@ -292,7 +393,11 @@ export default function Home() {
                             ? isLightMode
                               ? 'bg-yellow-500/15 border border-yellow-500/50 text-yellow-800 rounded-bl-lg shadow-[0_0_20px_rgba(234,179,8,0.1)]'
                               : 'bg-yellow-500/10 border border-yellow-500/40 text-yellow-100 rounded-bl-lg shadow-[0_0_20px_rgba(234,179,8,0.08)]'
-                            : isLightMode ? 'text-gray-800' : 'text-gray-200'
+                            : isOffTopic
+                              ? isLightMode
+                                ? 'bg-blue-500/15 border border-blue-500/50 text-blue-800 rounded-bl-lg shadow-[0_0_20px_rgba(59,130,246,0.1)]'
+                                : 'bg-blue-500/10 border border-blue-500/40 text-blue-100 rounded-bl-lg shadow-[0_0_20px_rgba(59,130,246,0.08)]'
+                              : isLightMode ? 'text-gray-800' : 'text-gray-200'
                     }`}>
                       {msg.role === 'assistant' && (
                         <div className={`flex items-center gap-2 mb-1.5 text-xs transition-colors duration-300 ${
@@ -300,26 +405,28 @@ export default function Home() {
                             ? isLightMode ? 'text-red-700 opacity-100 font-bold' : 'text-red-400 opacity-100 font-bold'
                             : isPrivacy 
                               ? isLightMode ? 'text-yellow-700 opacity-100 font-bold' : 'text-yellow-400 opacity-100 font-bold' 
-                              : 'opacity-50'
+                              : isOffTopic
+                                ? isLightMode ? 'text-blue-700 opacity-100 font-bold' : 'text-blue-400 opacity-100 font-bold'
+                                : 'opacity-50'
                         }`}>
                           <GraduationCap size={14} />
                           {t('chat.assistant')}
                         </div>
                       )}
-                      <div className="text-sm md:text-[15px] leading-relaxed break-words markdown-content">
-                        {msg.role === 'assistant' && msg.content === '' && isStreaming ? (
+                      <div className="text-sm md:text-[15px] leading-relaxed break-words markdown-content overflow-hidden">
+                        {msg.role === 'assistant' && msg.content === '' && isStreaming && !isTyping ? (
                           <div className="flex items-center gap-1.5 py-1">
                             <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
                             <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
                             <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
                           </div>
                         ) : (
-                          <ReactMarkdown 
+                          <ReactMarkdown
                             remarkPlugins={[remarkGfm]}
                             components={{
                               a: ({ node, ...props }) => (
-                                <a 
-                                  {...props} 
+                                <a
+                                  {...props}
                                   onClick={(e) => {
                                     e.preventDefault();
                                     setExternalLink({ url: props.href || '', isOpen: true });
@@ -338,11 +445,13 @@ export default function Home() {
                               )
                             }}
                           >
-                            {isAbort 
-                              ? msg.content.trim().replace(abortRegex, '').trim() 
-                              : isPrivacy 
-                                ? msg.content.trim().replace(privacyRegex, '').trim() 
-                                : msg.content}
+                            {isAbort
+                              ? msg.content.trim().replace(abortRegex, '').trim()
+                              : isPrivacy
+                                ? msg.content.trim().replace(privacyRegex, '').trim()
+                                : isOffTopic
+                                  ? msg.content.trim().replace(offTopicRegex, '').trim()
+                                  : msg.content}
                           </ReactMarkdown>
                         )}
                       </div>
@@ -355,12 +464,12 @@ export default function Home() {
           </div>
         </div>
 
-        <div className={`p-4 transition-colors duration-300 ${isLightMode ? 'bg-[#f5f5f5]' : 'bg-[#161616]'}`}>
-          <div className="max-w-3xl mx-auto relative group">
-            <div className={`relative flex items-start w-full rounded-[24px] md:rounded-[30px] border transition-all duration-300 p-1.5 md:p-2 pr-2 md:pr-2 ${
+        <div className={`p-4 pb-4 transition-colors duration-300 fixed bottom-0 left-0 right-0 z-20 ${isLightMode ? 'bg-gradient-to-t from-[#f5f5f5] via-[#f5f5f5] to-transparent' : 'bg-gradient-to-t from-[#161616] via-[#161616] to-transparent'}`}>
+          <div className="max-w-3xl mx-auto relative group px-4 md:px-0">
+            <div className={`relative flex items-start w-full rounded-[24px] md:rounded-[30px] border transition-all duration-300 p-1.5 md:p-2 pr-2 md:pr-2 shadow-xl ${
               isLightMode 
-                ? 'bg-white border-black/[0.08] focus-within:border-black/15 shadow-sm' 
-                : 'bg-[#212121] border-white/[0.03] focus-within:border-white/10'
+                ? 'bg-white border-black/[0.08] focus-within:border-black/15 shadow-black/[0.03]' 
+                : 'bg-[#212121] border-white/[0.03] focus-within:border-white/10 shadow-black/40'
             }`}>
               <div className="flex items-center pt-0.5" ref={modelRef}>
                 {models.length === 0 ? (
@@ -449,7 +558,7 @@ export default function Home() {
 
               <div className="pt-0.5">
                 <button
-                  onClick={handleSend}
+                  onClick={() => handleSend()}
                   disabled={!input.trim() || isLoading || !isAccepted}
                   className={`flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full transition-all duration-300 flex-shrink-0 ${
                     input.trim() && !isLoading && isAccepted 

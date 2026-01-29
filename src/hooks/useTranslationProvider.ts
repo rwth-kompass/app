@@ -13,6 +13,7 @@ import itYaml from '../assets/lang/it.yaml?raw';
 import ptYaml from '../assets/lang/pt.yaml?raw';
 import nlYaml from '../assets/lang/nl.yaml?raw';
 import uaYaml from '../assets/lang/ua.yaml?raw';
+import ruYaml from '../assets/lang/ru.yaml?raw';
 
 interface ResourceLanguage {
   [key: string]: any;
@@ -33,6 +34,7 @@ const resources: Resources = {
   jp: { translation: yaml.load(jpYaml) },
   cn: { translation: yaml.load(cnYaml) },
   ua: { translation: yaml.load(uaYaml) },
+  ru: { translation: yaml.load(ruYaml) },
 };
 
 i18n
