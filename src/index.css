@@ -5,6 +5,7 @@
   line-height: 1.5;
   font-weight: 400;
   color-scheme: dark;
+  scale: 1;
 
   --bg-primary: #161616;
   --bg-secondary: #212121;
@@ -45,8 +46,6 @@ body {
   color: var(--text-primary);
   transition: background-color 0.3s ease, color 0.3s ease;
 }
-
-
 
 button {
   cursor: pointer;
